@@ -25,6 +25,6 @@ app.use("/api/auth", authRoute);
 app.use("/api/categories", categoryRoute);
 app.use("/api/books", bookRoute);
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`server up and running at PORT ${PORT}`);
 })
