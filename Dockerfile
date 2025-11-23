@@ -18,6 +18,9 @@ FROM node:20-alpine
 
 WORKDIR /app
 
+# Install bash for better shell support
+RUN apk add --no-cache bash
+
 # Copy package files
 COPY package*.json ./
 
@@ -32,8 +35,15 @@ COPY prisma ./prisma/
 # Copy application source
 COPY src ./src
 
+# Create startup script
+RUN echo '#!/bin/bash\n\
+echo "Running Prisma migrations..."\n\
+npx prisma migrate deploy\n\
+echo "Starting application..."\n\
+exec npm start' > /app/start.sh && chmod +x /app/start.sh
+
 # Expose port
 EXPOSE 5050
 
-# Start the application
-CMD ["npm", "start"]
+# Start the application with migration
+CMD ["/app/start.sh"]
