@@ -9,58 +9,60 @@
 
 */
 -- DropForeignKey
-ALTER TABLE `Cart` DROP FOREIGN KEY `Cart_productId_fkey`;
+ALTER TABLE "Cart" DROP CONSTRAINT "Cart_productId_fkey";
 
 -- DropForeignKey
-ALTER TABLE `Cart` DROP FOREIGN KEY `Cart_userId_fkey`;
+ALTER TABLE "Cart" DROP CONSTRAINT "Cart_userId_fkey";
 
 -- DropForeignKey
-ALTER TABLE `Invoice` DROP FOREIGN KEY `Invoice_userId_fkey`;
+ALTER TABLE "Invoice" DROP CONSTRAINT "Invoice_userId_fkey";
 
 -- DropForeignKey
-ALTER TABLE `Product` DROP FOREIGN KEY `Product_inventoryId_fkey`;
+ALTER TABLE "Product" DROP CONSTRAINT "Product_inventoryId_fkey";
 
 -- AlterTable
-ALTER TABLE `User` ADD COLUMN `updatedAt` DATETIME(3) NOT NULL;
+ALTER TABLE "User" ADD COLUMN "updatedAt" TIMESTAMP(3) NOT NULL;
 
 -- DropTable
-DROP TABLE `Cart`;
+DROP TABLE "Cart";
 
 -- DropTable
-DROP TABLE `Inventory`;
+DROP TABLE "Inventory";
 
 -- DropTable
-DROP TABLE `Invoice`;
+DROP TABLE "Invoice";
 
 -- DropTable
-DROP TABLE `Product`;
+DROP TABLE "Product";
 
 -- CreateTable
-CREATE TABLE `Category` (
-    `id` VARCHAR(191) NOT NULL,
-    `name` VARCHAR(191) NOT NULL,
-    `description` VARCHAR(191) NULL,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL,
+CREATE TABLE "Category" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    UNIQUE INDEX `Category_name_key`(`name`),
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    CONSTRAINT "Category_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
-CREATE TABLE `Book` (
-    `id` VARCHAR(191) NOT NULL,
-    `title` VARCHAR(191) NOT NULL,
-    `author` VARCHAR(191) NOT NULL,
-    `description` VARCHAR(191) NULL,
-    `publishYear` INTEGER NOT NULL,
-    `stock` INTEGER NOT NULL DEFAULT 0,
-    `categoryId` VARCHAR(191) NOT NULL,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL,
+CREATE TABLE "Book" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "author" TEXT NOT NULL,
+    "description" TEXT,
+    "publishYear" INTEGER NOT NULL,
+    "stock" INTEGER NOT NULL DEFAULT 0,
+    "categoryId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    CONSTRAINT "Book_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
 
 -- AddForeignKey
-ALTER TABLE `Book` ADD CONSTRAINT `Book_categoryId_fkey` FOREIGN KEY (`categoryId`) REFERENCES `Category`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Book" ADD CONSTRAINT "Book_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE CASCADE ON UPDATE CASCADE;
