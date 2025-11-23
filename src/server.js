@@ -8,7 +8,7 @@ dotenv.config({ path: '.env' });
 
 const app = express();
 
-const PORT = process.env.APP_PORT || 5000;
+const PORT = process.env.APP_PORT || 5050;
 
 //middlewares
 app.use(cookieParser());

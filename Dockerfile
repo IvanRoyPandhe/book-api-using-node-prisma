@@ -33,7 +33,7 @@ COPY prisma ./prisma/
 COPY src ./src
 
 # Expose port
-EXPOSE 5500
+EXPOSE 5050
 
 # Start the application
 CMD ["npm", "start"]

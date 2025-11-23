@@ -25,7 +25,7 @@ services:
     container_name: ecommerce-api
     restart: unless-stopped
     ports:
-      - "5500:5500"
+      - "5050:5050"
     environment:
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/ecommerce
       JWT_SECRET: your-secret-key-change-this
